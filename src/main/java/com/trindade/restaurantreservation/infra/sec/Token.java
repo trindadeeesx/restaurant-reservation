@@ -21,13 +21,11 @@ public class Token {
 		try {
 			Algorithm alg = Algorithm.HMAC256(algorithmSecret);
 
-			String token = JWT.create()
+			return JWT.create()
 					.withIssuer("restaurant-reservation")
 					.withSubject(user.getEmail())
 					.withExpiresAt(generateExpirationDate())
 					.sign(alg);
-
-			return token;
 		} catch (JWTCreationException exc) {
 			throw new RuntimeException("Erro ao gerar JWT", exc);
 		}
