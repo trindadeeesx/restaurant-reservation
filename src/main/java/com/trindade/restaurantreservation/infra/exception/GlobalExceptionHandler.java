@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -32,11 +34,16 @@ public class GlobalExceptionHandler {
 			MethodArgumentNotValidException ex,
 			HttpServletRequest req
 	) {
-		List<String> fields = ex.getBindingResult()
+		Map<String, String> errors = ex.getBindingResult()
 				.getFieldErrors()
 				.stream()
-				.map(f -> f.getField() + ": " + f.getDefaultMessage())
-				.toList();
+				.collect(
+						Collectors.toMap(
+								f -> f.getField(),
+								f -> f.getDefaultMessage(),
+								(a, b) -> a // evita conflito caso a key seja a mesma
+						)
+				);
 
 		ApiError error = new ApiError(
 				"Campos inválidos",
@@ -44,7 +51,7 @@ public class GlobalExceptionHandler {
 				"ValidationException",
 				LocalDateTime.now(),
 				req.getRequestURI(),
-				fields
+				errors
 		);
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
