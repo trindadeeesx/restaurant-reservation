@@ -1,18 +1,23 @@
 package com.trindade.restaurantreservation.dtos;
 
+import com.trindade.restaurantreservation.domain.user.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record RegisterRequestDTO(
-		@NotBlank
+
+		@NotBlank(message = "Nome é obrigatório.")
 		String name,
 
-		@Email
-		@NotBlank
+		@NotBlank(message = "Email é obrigatório.")
+		@Email(message = "Email inválido.")
 		String email,
 
-		@NotBlank
-		@Size(min = 8)
-		String password
+		@NotBlank(message = "Senha é obrigatória.")
+		@Size(min = 8, message = "A senha deve ter pelo menos 6 caracteres.")
+		String password,
+
+		// opcional
+		UserRole role
 ) {}
