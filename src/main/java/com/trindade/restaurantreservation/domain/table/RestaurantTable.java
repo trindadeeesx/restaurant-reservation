@@ -1,6 +1,7 @@
 package com.trindade.restaurantreservation.domain.table;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,11 @@ public class RestaurantTable {
 	private String id;
 
 	@NotNull
+	private String name;
+
+	@NotNull
 	@Min(1)
+	@Max(16)
 	@Column(nullable = false)
 	private Integer capacity;
 
