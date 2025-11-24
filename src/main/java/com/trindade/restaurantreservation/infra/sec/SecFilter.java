@@ -35,7 +35,7 @@ public class SecFilter extends OncePerRequestFilter {
 		if (isValid != null) {
 			User user = userRepo.findByEmail(isValid).orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
 
-			var authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+			var authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 			var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
