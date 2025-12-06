@@ -46,8 +46,8 @@ public class SecurityConfig {
 					.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 					.authorizeHttpRequests(auth -> auth
 							// Libera endpoints de autenticação
-							.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-							.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+							.requestMatchers("/", "/public/**", "/health").permitAll()
+							.requestMatchers("/auth/**").permitAll()
 
 							// Libera H2 Console
 							.requestMatchers("/h2-console/**").permitAll()

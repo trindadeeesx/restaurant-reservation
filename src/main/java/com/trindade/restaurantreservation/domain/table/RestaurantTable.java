@@ -25,7 +25,7 @@ public class RestaurantTable {
 
 	@NotNull
 	@Min(1)
-	@Max(16)
+	@Max(100000)
 	@Column(nullable = false)
 	private Integer capacity;
 

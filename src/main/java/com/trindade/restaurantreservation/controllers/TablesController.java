@@ -1,5 +1,6 @@
 package com.trindade.restaurantreservation.controllers;
 
+import com.trindade.restaurantreservation.domain.table.RestaurantTable;
 import com.trindade.restaurantreservation.dtos.RestaurantTableRequestDTO;
 import com.trindade.restaurantreservation.repos.RestaurantTableRepo;
 import com.trindade.restaurantreservation.services.RestaurantTableService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/restaurant-tables")
@@ -25,7 +28,9 @@ public class TablesController {
 
 	@GetMapping("/")
 	public ResponseEntity<?> getOne() {
-		return ResponseEntity.status(HttpStatus.OK).body("mesa");
+		List<RestaurantTable> tables = this.service.getAll();
+
+		return ResponseEntity.status(HttpStatus.OK).body(tables);
 	}
 
 	@PostMapping("/")

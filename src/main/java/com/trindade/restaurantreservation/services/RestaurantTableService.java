@@ -8,10 +8,18 @@ import com.trindade.restaurantreservation.repos.RestaurantTableRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RestaurantTableService {
 	private final RestaurantTableRepo repo;
+
+	public List<RestaurantTable> getAll() {
+		List<RestaurantTable> restaurantTables = this.repo.findAll();
+
+		return restaurantTables;
+	}
 
 	public RestaurantTableResponseDTO create(RestaurantTableRequestDTO dto) {
 		RestaurantTable restTable = new RestaurantTable();
